@@ -1,6 +1,6 @@
 const {poolPromish, sql} = require("../../config/db");
 
-const createCustomer =async (customerData)=>{
+const createCustomer =async (customerData , userId)=>{
    
 const pool = await poolPromish;
 
@@ -8,12 +8,13 @@ const result = await pool.request()
  .input("inputName", sql.VarChar(50), "addCustomer")
         .input("CustomerCode", sql.VarChar(50), customerData.CustomerCode)
         .input("CustomerName", sql.VarChar(150), customerData.CustomerName)
-        .input("Email", sql.VarChar(150), customerData.Email || null)
+        .input("Email", sql.VarChar(150), customerData.Email)
         .input("MobileNo", sql.VarChar(20), customerData.MobileNo)
         .input("Address", sql.VarChar(500), customerData.Address || null)
         .input("City", sql.VarChar(100), customerData.City || null)
         .input("State", sql.VarChar(100), customerData.State || null)
-        .input("Pincode", sql.VarChar(10), customerData.Pincode || null)
+        .input("Pincode", sql.VarChar(10), customerData.Pincode || null) 
+        .input("CreatedBy", sql.Int, userId)
         .execute("sp_Customer");
 
         return result.recordset[0];  
@@ -66,10 +67,22 @@ const result = await pool.request()
 
 
 
+const deleteCustomer = async(customerId)=>{
+    const pool = await poolPromish;
+
+    const result = await pool.request()
+    .input("inputName", sql.VarChar(50), "deleteCustomer")
+        .input("CustomerId", sql.Int, customerId)
+        .execute("sp_Customer");
+
+        return result.recordset[0] || null ;
+}
+
 
 module.exports ={
     createCustomer,
     getCustomer,
     getCustomerById,
     updateCustomer,
+    deleteCustomer,
 }

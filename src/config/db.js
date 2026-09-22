@@ -14,6 +14,7 @@ const dbConfig = {
     }
 }
 
+
 const poolPromish = new sql.ConnectionPool(dbConfig)
 .connect()
 .then(pool =>{

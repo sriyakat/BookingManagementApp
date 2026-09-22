@@ -1,4 +1,4 @@
-const { VarChar } = require("mssql");
+//const { VarChar } = require("mssql");
 const { poolPromish, sql } = require("../../config/db");
 
 
@@ -6,8 +6,7 @@ const getRoles = async () => {
     const pool = await poolPromish;
 
     const result = await pool.request()
-    .input("Action", sql.VarChar, "GET")
-    
+    .input("Action", sql.VarChar, "GET")    
     .execute("sp_GetRoles");
     
     return result.recordset;
@@ -26,12 +25,11 @@ const createRoles = async(roleName)=>{
 
     const result = await pool.request()
         .input("RoleName", sql.VarChar, roleName)
-        .execute("sp_CreateRole"); // SQL me procedure ka name check kar lein
+        .execute("sp_CreateRole"); 
 
-    // FIX: Directly [0] access mat karein
-    if (result.recordset && result.recordset.length > 0) {
+     if (result.recordset && result.recordset.length > 0) {
         return result.recordset[0];
-    }
+      }
     
     return { roleName, message: "Role created successfully" };
 };
