@@ -4,6 +4,8 @@ const router = express.Router();
 
 const bookingController = require("./booking.controller");
 const validate = require("../../middlewares/booking.middleware");
+const authorizeRoles = require("../../middlewares/role.middleware");
+const ROLES = require("../../constants/roles");
 
 
 // Booking Validation Schemas
@@ -18,7 +20,7 @@ router.post("/", authenticate, validate(createBookingSchema , "body"), bookingCo
 router.get("/", authenticate, bookingController.getBookings);
 router.get("/:id", authenticate, validate(bookingParamsSchema, "params"), bookingController.getBookingById);
 router.put("/:id", authenticate, validate(updateBookingBodySchema, "body"), validate(bookingParamsSchema, "params"), bookingController.updateBooking);
-router.delete("/:id", authenticate, validate(bookingParamsSchema, "params"), bookingController.deleteBooking);
+router.delete("/:id", authenticate, authorizeRoles(ROLES.ADMIN), validate(bookingParamsSchema, "params"), bookingController.deleteBooking);
 
 
 

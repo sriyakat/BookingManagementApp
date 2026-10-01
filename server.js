@@ -9,7 +9,9 @@ const bookingTrackingRoutes = require("./src/modules/bookings/tracking/bookingTr
 const authRoutes = require("./src/modules/auth/auth.routes.js");
 const errorMiddleware = require("./src/middlewares/error.middleware");
 const productRoutes = require("./src/modules/product/product.route.js");
-const hubRoutes = require("./src/modules/hub/hub.router.js")
+const hubRoutes = require("./src/modules/hub/hub.router.js");
+const employeeRoutes = require("./src/modules/employee/employee.routes.js")
+const shipmentAssignmentRoutes = require("./src/modules/shipmentAssignment/shipmentAssignment.routes.js");
 
 const app = express();
 
@@ -32,7 +34,8 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/booking/tracking", bookingTrackingRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/hub", hubRoutes); 
-
+app.use("/api/employee", employeeRoutes);
+app.use("/api/shipment-assignments", shipmentAssignmentRoutes);
 
 //Handle 404 Route not found
 app.use((req, res, next) => {
@@ -45,7 +48,7 @@ app.use((req, res, next) => {
 //Global Error Middleware - Must be at the VERY END
 app.use(errorMiddleware);
 
-//const PORT = process.env.PORT || 4200
+//const PORT= process.env.PORT || 4200
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

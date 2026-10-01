@@ -41,7 +41,6 @@ const authenticate = (req, res, next) => {
         next();
 
     } catch (error) {
-  // Agar JWT expired ho gaya hai
   if(error.name === "TokenExpiredError"){
     return next(
       new  AppError("Authentication Token Is Expire", 401)

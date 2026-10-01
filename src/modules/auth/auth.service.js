@@ -34,8 +34,6 @@ const registerUser = async (userData)=>{
 
 // User ke email aur password ko authenticate karta hai
 const loginUser = async(email, password)=>{
-
-// Database se email ke basis par user fetch kar rahe hain
     const user = await authRepository.loginUser(email);
 
     if(!user){
